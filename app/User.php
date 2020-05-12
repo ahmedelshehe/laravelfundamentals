@@ -36,10 +36,38 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    /**
+     * @var mixed
+     */
+
+
     public function role(){
         return $this->belongsTo('App\Role');
     }
     public function photo(){
         return $this->belongsTo('App\Photo');
     }
+    public function isAdmin(){
+
+
+        if($this->role->name  == "admin" && $this->is_active == 1){
+
+
+            return true;
+
+        }
+
+
+        return false;
+
+
+
+    }
+    public function getEmailAttribute($email){
+        return substr($email, 0,12).'....';
+    }
+    public function posts(){
+        return $this->hasMany('App\Post');
+    }
+
 }
